@@ -1,0 +1,57 @@
+name: Build and Test
+
+on: [push]
+jobs:
+  rspec:
+    env:
+      BUNDLE_JOBS: 4
+      BUNDLE_RETRY: 3
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:12
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        env:
+          # Helpts to avoid error while running "act" localy
+          --env-file: .env
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libpq-dev postgresql-client-12
+
+      - name: Bundle install
+        run: |
+          bundle install
+          bundle update
+
+      - name: Setup Database
+        run: |
+          cp config/database.yml.github-actions config/database.yml
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+
+      - name: Run Lint
+        run: bundle exec rubocop
+
+      - name: Run RSpec
+        env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        run: bundle exec rspec --force-color

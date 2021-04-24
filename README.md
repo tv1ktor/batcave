@@ -1,5 +1,6 @@
 <h1 align="center">Hi 👋, I think it's time I create my portfolio website.</h1>
 
+![Master Branch Linters and Tests](https://github.com/tv1ktor/batcave/actions/workflows/main.yml/badge.svg?branch=master)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-community-brightgreen.svg)](https://rubystyle.guide)
 
 I like the idea when one person is able to create outstanding web application using one server(port(almost 😅)) and one language (even though I like many languages).
