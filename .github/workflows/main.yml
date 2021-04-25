@@ -6,6 +6,7 @@ jobs:
     env:
       BUNDLE_JOBS: 4
       BUNDLE_RETRY: 3
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
     runs-on: ubuntu-latest
     services:
       postgres:

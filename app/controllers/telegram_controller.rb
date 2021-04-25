@@ -6,10 +6,14 @@ class TelegramController < ApplicationController
   before_action :request_from_telegram?
   before_action :request_from_myself?
 
+  class Forbidden < StandardError; end
+
+  rescue_from Forbidden, with: :ok
+
   # @route POST /telegram (telegram)
   def accept_message
-    client.send_message(chat_id: message.chat.id, text: "Hello, #{message.from.first_name}")
-    render plain: "OK"
+    Telega::Processor.new(client, message).call
+    ok
   end
 
   private
@@ -23,12 +27,17 @@ class TelegramController < ApplicationController
   end
 
   def request_from_myself?
-    Telega::WHITELISTED_CHATS.any?(message.from.id)
+    Telega::WHITELISTED_CHATS.any?(message.from.id) || raise(Forbidden)
   end
 
   def request_from_telegram?
     Telega::SUBNETS
       .map {|subnet| IPAddr.new subnet }
-      .any? {|subnet| subnet.include?(request.remote_ip) }
+      .any? {|subnet| subnet.include?(request.remote_ip) } || raise(Forbidden)
+  end
+
+  def ok
+    # Might wanna track who else is knocking on my doors
+    render plain: "OK", status: :ok
   end
 end

@@ -7,6 +7,14 @@ require:
 
 AllCops:
   NewCops: enable
+  Exclude:
+  - 'bin/**/*'
+  - 'docker/**/*'
+  - 'tmp/**/*'
+  - 'vendor/**/*'
+  - 'node_modules/**/*'
+  - 'db/schema.rb'
+
 
 # Commonly used screens these days easily fit more than 80 characters.
 Layout/LineLength:
@@ -135,3 +143,6 @@ Style/MethodDefParentheses:
 
 RSpec/FilePath:
   Enabled: false
+
+RSpec/ExampleLength:
+  Max: 15

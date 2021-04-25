@@ -25,18 +25,25 @@ gem "strong_migrations"
 gem "telegram-bot-ruby", "~> 0.15.0"
 
 group :development, :test do
-  # Call "byebug" anywhere in the code to stop execution and get a debugger console
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
-end
+  gem "factory_bot_rails"
+  gem "ffaker"
 
-group :development do
+  # Linters
   gem "rubocop", "~> 1.13", require: false
   gem "rubocop-performance", "~> 1.11", require: false
   gem "rubocop-rails", "~> 2.9", require: false
   gem "rubocop-rspec", "~> 2.2", require: false
 
   # Auto-comment routes inside controllers
-  gem "chusaku", "~> 0.5.0"
+  gem "chusaku", "~> 0.5.0", require: false
+
+  # Call "byebug" anywhere in the code to stop execution and get a debugger console
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
+end
+
+group :development do
+  gem "brakeman", require: false
+  gem "bullet"
 
   # Access an interactive console on exception pages or by calling "console" anywhere in the code.
   gem "web-console", ">= 4.1.0"
@@ -49,7 +56,10 @@ group :development do
 end
 
 group :test do
+  gem "database_cleaner-active_record"
   gem "rspec-rails", "~> 4.0"
+  gem "simplecov", require: false
+  gem "vcr"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
