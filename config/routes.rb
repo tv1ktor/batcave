@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :my do
+    resources :thoughts, only: [:index]
+    resources :works, only: [:index]
+  end
 
   post :telegram, to: "telegram#accept_message"
+
+  root "application#me"
 end

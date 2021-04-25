@@ -24,6 +24,10 @@ gem "strong_migrations"
 # Telegram API
 gem "telegram-bot-ruby", "~> 0.15.0"
 
+gem "draper", "~> 4.0"
+
+gem "slim", "~> 4.1"
+
 group :development, :test do
   gem "factory_bot_rails"
   gem "ffaker"
