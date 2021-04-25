@@ -132,3 +132,6 @@ Lint/Debugger:
 # Style preference
 Style/MethodDefParentheses:
   Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
