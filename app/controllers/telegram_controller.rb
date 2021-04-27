@@ -12,14 +12,15 @@ class TelegramController < ApplicationController
 
   # @route POST /telegram (telegram)
   def accept_message
-    Telega::Processor.new(client, message).call
+    context = Telega::Context.new(api: api, message: message)
+    Telega::Processor.new(context).call
     ok
   end
 
   private
 
-  def client
-    @client ||= Telegram::Bot::Api.new(Telega::TOKEN)
+  def api
+    @api ||= Telegram::Bot::Api.new(Telega::TOKEN)
   end
 
   def message

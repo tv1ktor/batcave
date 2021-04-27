@@ -28,6 +28,10 @@ gem "draper", "~> 4.0"
 
 gem "slim", "~> 4.1"
 
+# Dry ecosystem:
+gem "dry-struct", "~> 1.4"
+gem "dry-validation", "~> 1.6"
+
 group :development, :test do
   gem "factory_bot_rails"
   gem "ffaker"
