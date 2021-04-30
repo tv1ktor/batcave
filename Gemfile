@@ -15,6 +15,7 @@ gem "puma", "~> 5.0"
 gem "webpacker", "~> 5.0"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
+gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
