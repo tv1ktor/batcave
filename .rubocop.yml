@@ -15,6 +15,12 @@ AllCops:
   - 'node_modules/**/*'
   - 'db/schema.rb'
 
+Metrics/AbcSize:
+  Max: 25
+
+# For structure {Telega::Flows}
+Naming/VariableNumber:
+  Enabled: false
 
 # Commonly used screens these days easily fit more than 80 characters.
 Layout/LineLength:

@@ -11,55 +11,54 @@ module Telega
     # https://core.telegram.org/bots/api#getting-updates
     def call
       case context.message
-      when Telegram::Bot::Types::Message
-        return Command.new(context).handle if CommandContract.new.call(command: context.message.text).success?
-
-        "Message"
-      when Telegram::Bot::Types::EditedMessage
-        "EditedMessage"
-      when Telegram::Bot::Types::InlineQuery
-        "InlineQuery"
-      when Telegram::Bot::Types::ChosenInlineResult
-        "ChosenInlineResult"
-      when Telegram::Bot::Types::CallbackQuery
-        "CallbackQuery"
+      when Telegram::Bot::Types::Message then process_regular_message
+      when Telegram::Bot::Types::EditedMessage then "EditedMessage"
+      when Telegram::Bot::Types::InlineQuery then "InlineQuery"
+      when Telegram::Bot::Types::ChosenInlineResult then "ChosenInlineResult"
+      when Telegram::Bot::Types::CallbackQuery then "CallbackQuery"
       end
     end
 
     private
 
     attr_reader :context
+
+    def process_regular_message
+      if CommandContract.new.call(command: context.message.text).success?
+        Command.handle(context)
+      else
+        flow = Flows.current_flow(context)
+        return flow.step_up! if flow
+
+        context.api.send_message(text: "What should I do with it, genius?", **common_keys)
+      end
+    end
+
+    def common_keys
+      {chat_id: context.message.chat.id}
+    end
   end
 
   class CommandContract < Dry::Validation::Contract
-    COMMAND_REGEXP = %r{^/}
-
     schema do
       required(:command).filled(:string)
     end
 
     rule(:command) do
-      key.failure("is not a command") unless value.match?(COMMAND_REGEXP)
+      key.failure("is not a command") unless value.match?(%r{^/})
     end
   end
 
   class Command
-    def initialize(context)
-      @context = context
-    end
-
-    def handle
-      case @context.message.text
+    def self.handle(context)
+      case context.message.text
       when "/thought"
-        context.api.send_message(
-          char_id: context.message.chat.id,
-          text: "Hey. I should do flow structure with new User <-> Flow(with steps) relation"
-        )
+        Flows::AddThought.new(context).restart!
+      when "/start"
+        Flows::Welcome.new(context).restart!
+      else
+        context.api.send_message(chat_id: context.message.chat.id, text: "Unknown command.")
       end
     end
-
-    private
-
-    attr_reader :context
   end
 end
