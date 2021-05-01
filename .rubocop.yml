@@ -8,6 +8,7 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
+  - 'db/migrate/*'
   - 'bin/**/*'
   - 'docker/**/*'
   - 'tmp/**/*'

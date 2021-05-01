@@ -51,14 +51,16 @@ module Telega
 
   class Command
     def self.handle(context)
-      case context.message.text
-      when "/thought"
-        Flows::AddThought.new(context).restart!
-      when "/start"
-        Flows::Welcome.new(context).restart!
-      else
-        context.api.send_message(chat_id: context.message.chat.id, text: "Unknown command.")
-      end
+      handler = case context.message.text
+                when "/thought" then Flows::AddThought
+                when "/start" then Flows::Welcome
+                when "/link" then Flows::AddLink
+                when "/last_5" then Flows::GetLinks
+                else
+                  return context.api.send_message(chat_id: context.message.chat.id, text: "Unknown command.")
+                end
+
+      handler.new(context).restart!
     end
   end
 end
