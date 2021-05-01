@@ -5,11 +5,15 @@
 
 import Rails from "@rails/ujs";
 import * as ActiveStorage from "@rails/activestorage";
+
+// This is action cable channels
 import "channels";
 
+// Styles
 import "stylesheets/thoughts";
 
 Rails.start();
 ActiveStorage.start();
 
-import "controllers";
+// This is stimulus controllers
+// import "controllers";

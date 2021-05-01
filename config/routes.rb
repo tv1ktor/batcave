@@ -3,10 +3,11 @@
 Rails.application.routes.draw do
   namespace :my do
     resources :thoughts, only: [:index]
+
     resources :works, only: [:index]
   end
 
   post :telegram, to: "telegram#accept_message"
 
-  root "application#me"
+  root "application#index"
 end

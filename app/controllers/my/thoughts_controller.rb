@@ -3,7 +3,7 @@
 module My
   class ThoughtsController < ApplicationController
     def index
-      @thoughts = Thought.all
+      @thoughts = ThoughtDecorator.decorate_collection(Thought.all)
     end
   end
 end

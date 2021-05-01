@@ -21,12 +21,11 @@ gem "sidekiq", "~> 4.1", ">= 4.1.2"
 gem "bootsnap", ">= 1.4.4", require: false
 
 gem "strong_migrations"
-
 # Telegram API
 gem "telegram-bot-ruby", "~> 0.15.0"
-
+# Decorator for models
 gem "draper", "~> 4.0"
-
+# Template language. Substitute for ERB
 gem "slim", "~> 4.1"
 
 # Dry ecosystem:
