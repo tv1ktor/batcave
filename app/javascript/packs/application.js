@@ -10,6 +10,8 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 
 // Styles
+import "stylesheets/global";
+import "stylesheets/root";
 import "stylesheets/thoughts";
 
 Rails.start();

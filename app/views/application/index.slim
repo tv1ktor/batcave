@@ -1,0 +1,22 @@
+
+
+/ .model
+/   .gray
+
+/ script src="https://code.jquery.com/jquery-3.1.0.js"
+/ javascript:
+/   $('.model').mousemove(function(e){
+/     var offs = $(this).offset(),
+/         p    = {x:offs.left, y:offs.top},
+/         mPos = {x:e.pageX, y:e.pageY},
+/         x    = mPos.x - p.x - 50,
+/         y    = mPos.y - p.y - 50;
+
+/     $('.gray', this).css({left:x, top:y, backgroundPosition: -x+'px '+-y+'px'});
+/   });
+
+.root-page
+  = content_for :header do
+    navigation
+
+

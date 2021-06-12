@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: auto;
+}
+
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  background-color: #000;
+}
+
+body {
+  margin: 0;
+  color: #fff;
+  background: #000;
+  transition: background-color 0.2s ease 0s;
+}
